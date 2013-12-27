@@ -12,6 +12,7 @@ class Pagination
 {
 	protected $totalItems = 0;
 	protected $itemsPerPage = 20;
+	protected $proximity = 4;
 	protected $page;
 	protected $uri;
 	protected $uriPattern = "page={page}"; // default is with a $_GET[page] parameter. Set it to "page/{page}" for friendly URLs
@@ -29,12 +30,14 @@ class Pagination
 					$this->setItems($value);
 				} elseif ($key == "page") {
 					$this->setPage($value);
-				} elseif ($key == "itemsPerPage") {
+				} elseif ($key == "itemsPerPage" or $key == "ipp") {
 					$this->setItemsPerPage($value);
 				} elseif ($key == "uri") {
 					$this->setUri($value);
 				} elseif ($key == "pattern") {
 					$this->setPattern($value);
+				} elseif ($key == "proximity") {
+					$this->setProximity($value);
 				}
 			}
 		}
@@ -47,6 +50,9 @@ class Pagination
 	 */
 	public function setItems($totalItems)
 	{
+		if ($totalItems < 0) {
+			throw new Exception("totalItems must be not negative value");
+		}
 		$this->totalItems = (int) $totalItems;
 
 		return $this;
@@ -69,6 +75,9 @@ class Pagination
 	 */
 	public function setPage($page)
 	{
+		if ($page < 1) {
+			throw new Exception("page must be positive integer value");
+		}
 		$this->page = (int) $page;
 
 		return $this;
@@ -103,6 +112,9 @@ class Pagination
 	 */
 	public function setItemsPerPage($itemsPerPage)
 	{
+		if ($itemsPerPage < 1) {
+			throw new Exception("itemsPerPage must be positive integer value");
+		}
 		$this->itemsPerPage = (int) $itemsPerPage;
 
 		return $this;
@@ -117,6 +129,37 @@ class Pagination
 	{
 		return $this->itemsPerPage;
 	}
+
+	/**
+	 * Sets proximity - how many page links should be in front and after current page.
+	 * Default is 4.
+	 * Total number of links (items toArray() method returns) can be calculated by
+	 * proximity * 2 + 1 (current page) + 1 (previous) + 1 (next). So if proximity
+	 * is set to 4 total number of links will be 13; if proximity is 3 total pages = 9
+	 *
+	 * @param [type] $proximity [description]
+	 */
+	public function setProximity($proximity)
+	{
+		if ($proximity < 0) {
+			throw new Exception("proximity must be non negative value");
+		}
+		$this->proximity = (int) $proximity;
+
+		return $this;
+	}
+
+	/**
+	 * Returns proximity - how many page links should be in front and after current page.
+	 * Default is 4
+	 *
+	 * @return integer
+	 */
+	public function getProximity()
+	{
+		return $this->proximity;
+	}
+
 
 	/**
 	 * Sets current URI.
@@ -229,9 +272,8 @@ class Pagination
 			}
 		}
 
-		// TODO: $pageRange or $maxPages should be customizable
-		$pageRange = 4;
-		$maxPages = $pageRange * 2 + 1;
+		$proximity = $this->getProximity();
+		$maxPages = $proximity * 2 + 1;
 
 		// 2 .. last_page - 1
 		if ($last = $this->getTotalPages()) {
@@ -239,8 +281,8 @@ class Pagination
 				$from = 2;
 				$to = $last - 1;
 			} else {
-				$from = max(2, $page - $pageRange);
-				$to = min($last - 1, $page + $pageRange);
+				$from = max(2, $page - $proximity);
+				$to = min($last - 1, $page + $proximity);
 				while ($to - $from < $maxPages - 1) {
 					if ($from > 2) {
 						$from--;

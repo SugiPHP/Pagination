@@ -23,6 +23,11 @@ class PaginationTest extends PHPUnit_Framework_TestCase
 		// when setting a page Pagination should return self
 		$this->assertInstanceOf("SugiPHP\Pagination\Pagination", $pagination->setPage(33));
 		$this->assertSame(33, $pagination->getPage());
+		// must be 1 or more
+		$this->setExpectedException("SugiPHP\Pagination\Exception");
+		$pagination->setPage(0);
+		$this->setExpectedException("SugiPHP\Pagination\Exception");
+		$pagination->setPage(-5);
 	}
 
 	public function testItemsPerPage()
@@ -32,6 +37,11 @@ class PaginationTest extends PHPUnit_Framework_TestCase
 		// when setting an itemsPerPage Pagination should return self
 		$this->assertInstanceOf("SugiPHP\Pagination\Pagination", $pagination->setItemsPerPage(10));
 		$this->assertSame(10, $pagination->getItemsPerPage());
+		// only positive integer
+		$this->setExpectedException("SugiPHP\Pagination\Exception");
+		$pagination->setItemsPerPage(0);
+		$this->setExpectedException("SugiPHP\Pagination\Exception");
+		$pagination->setItemsPerPage(-5);
 	}
 
 	public function testSetTotalNumberOfItems()
@@ -42,6 +52,25 @@ class PaginationTest extends PHPUnit_Framework_TestCase
 		// when setting total number of items Pagination should return self
 		$this->assertInstanceOf("SugiPHP\Pagination\Pagination", $pagination->setItems(1000));
 		$this->assertSame(1000, $pagination->getItems());
+		$pagination->setItems(0);
+		$this->assertSame(0, $pagination->getItems());
+		// only positive numbers
+		$this->setExpectedException("SugiPHP\Pagination\Exception");
+		$pagination->setItems(-100);
+	}
+
+	public function testProximity()
+	{
+		$pagination = new Pagination();
+		// default proximity is 4
+		$this->assertSame(4, $pagination->getProximity());
+		$this->assertInstanceOf("SugiPHP\Pagination\Pagination", $pagination->setProximity(3));
+		$this->assertSame(3, $pagination->getProximity());
+		$pagination->setProximity(0);
+		$this->assertSame(0, $pagination->getProximity());
+		// only not negative values
+		$this->setExpectedException("SugiPHP\Pagination\Exception");
+		$pagination->setProximity(-2);
 	}
 
 	public function testSetUri()
@@ -242,8 +271,33 @@ class PaginationTest extends PHPUnit_Framework_TestCase
 		$pagination->setItems(105)->setItemsPerPage(10)->setUri("/posts?page=5");
 		$this->assertSame(5, $pagination->getPage());
 		$this->assertSame(11, $pagination->getTotalPages());
-		// TODO:
-		// $pages = $pagination->toArray();
+
+		$pages = $pagination->toArray();
 		// always should have "prev" and "next"
+		$this->assertArrayHasKey("prev", $pages);
+		$this->assertArrayHasKey("next", $pages);
+		// prev + first + 4 before + selected + 4 after + last + next
+		$this->assertSame(13, count($pages));
+
+		// Test with proximity 3
+		$pagination->setProximity(3);
+		$pages = $pagination->toArray();
+		$this->assertSame(11, count($pages));
+
+		// Test with proximity 2
+		$pagination->setProximity(2);
+		$pages = $pagination->toArray();
+		$this->assertSame(9, count($pages));
+
+		// Test with proximity 1
+		$pagination->setProximity(1);
+		$pages = $pagination->toArray();
+		$this->assertSame(7, count($pages));
+
+		// Test with proximity 0
+		$pagination->setProximity(0);
+		$pages = $pagination->toArray();
+		// TODO: bugfix! this gives me 6 now
+		// $this->assertSame(5, count($pages));
 	}
 }

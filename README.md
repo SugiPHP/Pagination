@@ -92,6 +92,20 @@ $pagination->getTotalPages();
  */
 $pagination->getOffset();
 
+/*
+ * Returns proximity - how many page links should be in front and after current page.
+ * Default is 4.
+ * If there is not enough pages to display in front of the current page links
+ * after will be more then proximity. So if you are on page 2 and proximity is 3
+ * the pages after the page 2 would not be 3, but 5.
+ * Total number of links (items toArray() method returns) can be calculated by
+ * proximity * 2 + 1 (current page) + 1 (previous) + 1 (next) + 1 (first) + 1 (last).
+ * So if proximity is set to 4 total number of links will be 13
+ * if proximity is 3 total pages will be 11
+ * Note: Total number of links will be less if there are not enough pages to show.
+ */
+$pagination->getProximity();
+
 ?>
 ```
 
@@ -122,7 +136,28 @@ $pagination->setPattern($pattern);
  * Sets the current URI. Default is $_SERVER["REQUEST_URI"]
  * Handy for unit tests.
  */
-$pagination->setUri($uri)
+$pagination->setUri($uri);
+
+// Sets the proximity. See getProximity() above for more explanations.
+$pagination->setProximity($proximity);
+
+?>
+```
+
+Each setting can be done in the Pagination constructor.
+
+```php
+<?php
+
+$config = array(
+	'items' => 100, // or 'totalItems'
+	'itemsPerPage' => 10, // or 'ipp'
+	'proximity' => 3,
+	'uri' => 'http://example.com/show/page:6',
+	'pattern' => 'page:{page}',
+	'page' => 6,
+);
+$pagination = new Pagination($config)
 
 ?>
 ```
@@ -169,6 +204,5 @@ echo '<ul class="pagination">' . $items . '</ul>';
 
 TODO
 ----
- - Set option for maximum number of links to display (currently 11 + previous and next buttons)
  - Some basic renders
 
