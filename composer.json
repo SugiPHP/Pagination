@@ -1,0 +1,23 @@
+{
+    "name": "sugiphp/pagination",
+    "type": "library",
+    "description": "SugiPHP Pagination Component",
+    "keywords": ["pagination", "paginator", "sugiphp"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Plamen Popov",
+            "email": "tzappa@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3"
+    },
+    "autoload": {
+        "psr-0": {
+            "SugiPHP\\Pagination\\": ""
+        }
+    },
+    "target-dir": "SugiPHP/Pagination",
+    "minimum-stability": "dev"
+}
