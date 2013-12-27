@@ -182,6 +182,16 @@ class Pagination
 	}
 
 	/**
+	 * Returns first item's index in a page we are on. Used in SQLs (e.g. LIMIT 20 OFFSET 60)
+	 *
+	 * @return integer
+	 */
+	public function getOffset()
+	{
+		return (int) max(0, ($this->getPage() - 1) * $this->getItemsPerPage());
+	}
+
+	/**
 	 * Returns pagination in form of an array.
 	 * Each pagination item (link) will contain certain info that can be used in a template to build HTML.
 	 *

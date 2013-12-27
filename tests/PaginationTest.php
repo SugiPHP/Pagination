@@ -101,6 +101,20 @@ class PaginationTest extends PHPUnit_Framework_TestCase
 		$this->assertSame(43335, $pagination->getTotalPages());
 	}
 
+	public function testGetOffset()
+	{
+		$pagination = new Pagination();
+		$this->assertSame(0, $pagination->getOffset());
+		$pagination->setItems(30)->setItemsPerPage(10);
+		$this->assertSame(0, $pagination->getOffset());
+		$pagination->setPage(1);
+		$this->assertSame(0, $pagination->getOffset());
+		$pagination->setPage(2);
+		$this->assertSame(10, $pagination->getOffset());
+		$pagination->setPage(3);
+		$this->assertSame(20, $pagination->getOffset());
+	}
+
 	public function testGetTotalPagesBySettingItemsPerPage()
 	{
 		$pagination = new Pagination();
