@@ -9,7 +9,7 @@ Basic usage
 
 Pagination class by it's own does not have any renders, instead it's primary goal is to give an array of items (links). This can be done easily:
 
-```
+```php
 <?php
 
 use SugiPHP\Pagination\Pagination;
@@ -22,7 +22,7 @@ $pagination->setItems(45); // Set the total number of records (items)
 
 If the web page's URL is http://example.com/index.php?page=3 Pagination will guess that the current page is 3 and will return something like this:
 
-```
+```php
 <?php
 
 var_dump($pagination->toArray());
@@ -62,22 +62,34 @@ var_dump($pagination->toArray());
 Getters
 -------
 
-```
+```php
 <?php
 
-// Returns current page number if it is set, or will try to guess it from the URL address. Default 1
+/*
+ * Returns current page number if it is set, or will try to guess it from the URL address.
+ * Default is 1
+ */
 $pagination->getPage();
 
-// Returns the maximum number of items viewed in a single page. Default 20
+/*
+ * Returns the maximum number of items viewed in a single page.
+ * Default is 20
+ */
 $pagination->getItemsPerPage();
 
-// Returns URI pattern that is used to generate links and to guess current page. Default is 'page={page}'
+/*
+ * Returns URI pattern that is used to generate links and to guess current page.
+ * Default is 'page={page}'
+ */
 $pagination->getPattern();
 
 // Returns total number of pages based on total items and items per page settings.
 $pagination->getTotalPages();
 
-// Returns first item's index in a page we are on. Used in SQLs (e.g. LIMIT 20 OFFSET 60)
+/*
+ * Returns first item's index in a page we are on.
+ * Used primary in SQLs (e.g. SELECT * FROM test LIMIT 20 OFFSET 60)
+ */
 $pagination->getOffset();
 
 ?>
@@ -85,25 +97,26 @@ $pagination->getOffset();
 
 Setters
 -------
-```
+```php
 <?php
 
 // Total number of items. This one MUST be set.
-$pagination->setItems(int);
+$pagination->setItems($totalItems);
 
 // Sets the number of items (lines) in a single page.
-$pagination->setItemsPerPage(int);
+$pagination->setItemsPerPage($itemsPerPage);
 
 // Sets the page number manually.
-$pagination->setPage(int);
+$pagination->setPage($page);
 
 /*
  * Sets the URI pattern for creating links for pages.
  * Default pattern is "page={page}"  (URLs like /posts/show?page=5)
  * Can be set for example to "p={page}" or anything else for $_GET parameter
- * Can be set also to "page/{page}" for friendly URLs which will result with URLs like: /posts/show/page/5
+ * Can be set also to "page/{page}" for friendly URLs. In this case Pagination
+ * will build URLs like: /posts/show/page/5
  */
-$pagination->setPattern();
+$pagination->setPattern($pattern);
 
 /*
  * Sets the current URI. Default is $_SERVER["REQUEST_URI"]
@@ -116,7 +129,7 @@ $pagination->setUri($uri)
 
 Basic renderer
 --------------
-```
+```php
 <?php
 
 $pages = $pagination->toArray();
