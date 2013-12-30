@@ -48,15 +48,15 @@ class PaginationTest extends PHPUnit_Framework_TestCase
 	{
 		$pagination = new Pagination();
 		// default items are 0
-		$this->assertSame(0, $pagination->getItems());
+		$this->assertSame(0, $pagination->getTotalItems());
 		// when setting total number of items Pagination should return self
-		$this->assertInstanceOf("SugiPHP\Pagination\Pagination", $pagination->setItems(1000));
-		$this->assertSame(1000, $pagination->getItems());
-		$pagination->setItems(0);
-		$this->assertSame(0, $pagination->getItems());
+		$this->assertInstanceOf("SugiPHP\Pagination\Pagination", $pagination->setTotalItems(1000));
+		$this->assertSame(1000, $pagination->getTotalItems());
+		$pagination->setTotalItems(0);
+		$this->assertSame(0, $pagination->getTotalItems());
 		// only positive numbers
 		$this->setExpectedException("SugiPHP\Pagination\Exception");
-		$pagination->setItems(-100);
+		$pagination->setTotalItems(-100);
 	}
 
 	public function testProximity()
@@ -106,7 +106,7 @@ class PaginationTest extends PHPUnit_Framework_TestCase
 			"pattern" => "/page/{page}"
 		);
 		$pagination = new Pagination($config);
-		$this->assertSame(100, $pagination->getItems());
+		$this->assertSame(100, $pagination->getTotalItems());
 		$this->assertSame(5, $pagination->getPage());
 		$this->assertSame(10, $pagination->getItemsPerPage());
 		$this->assertSame("/list/page/6", $pagination->getUri());
@@ -118,15 +118,15 @@ class PaginationTest extends PHPUnit_Framework_TestCase
 		$pagination = new Pagination();
 		// by default total items are 0, so there is 0 pages
 		$this->assertSame(0, $pagination->getTotalPages());
-		$pagination->setItems(5);
+		$pagination->setTotalItems(5);
 		$this->assertSame(1, $pagination->getTotalPages());
-		$pagination->setItems(20);
+		$pagination->setTotalItems(20);
 		$this->assertSame(1, $pagination->getTotalPages());
-		$pagination->setItems(21);
+		$pagination->setTotalItems(21);
 		$this->assertSame(2, $pagination->getTotalPages());
-		$pagination->setItems(40);
+		$pagination->setTotalItems(40);
 		$this->assertSame(2, $pagination->getTotalPages());
-		$pagination->setItems(866684);
+		$pagination->setTotalItems(866684);
 		$this->assertSame(43335, $pagination->getTotalPages());
 	}
 
@@ -134,7 +134,7 @@ class PaginationTest extends PHPUnit_Framework_TestCase
 	{
 		$pagination = new Pagination();
 		$this->assertSame(0, $pagination->getOffset());
-		$pagination->setItems(30)->setItemsPerPage(10);
+		$pagination->setTotalItems(30)->setItemsPerPage(10);
 		$this->assertSame(0, $pagination->getOffset());
 		$pagination->setPage(1);
 		$this->assertSame(0, $pagination->getOffset());
@@ -149,7 +149,7 @@ class PaginationTest extends PHPUnit_Framework_TestCase
 		$pagination = new Pagination();
 		$pagination->setItemsPerPage(3);
 		$this->assertSame(0, $pagination->getTotalPages());
-		$pagination->setItems(31);
+		$pagination->setTotalItems(31);
 		$this->assertSame(11, $pagination->getTotalPages());
 		$pagination->setItemsPerPage(31);
 		$this->assertSame(1, $pagination->getTotalPages());
@@ -268,7 +268,7 @@ class PaginationTest extends PHPUnit_Framework_TestCase
 	public function testRealExample()
 	{
 		$pagination = new Pagination();
-		$pagination->setItems(105)->setItemsPerPage(10)->setUri("/posts?page=5");
+		$pagination->setTotalItems(105)->setItemsPerPage(10)->setUri("/posts?page=5");
 		$this->assertSame(5, $pagination->getPage());
 		$this->assertSame(11, $pagination->getTotalPages());
 

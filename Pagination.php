@@ -48,6 +48,24 @@ class Pagination
 	 *
 	 * @param integer $totalItems
 	 */
+	public function setTotalItems($totalItems)
+	{
+		return $this->setItems($totalItems);
+	}
+
+	/**
+	 * Returns total number of items.
+	 *
+	 * @return int
+	 */
+	public function getTotalItems()
+	{
+		return $this->getItems();
+	}
+
+	/**
+	 * setTotalItems() alias
+	 */
 	public function setItems($totalItems)
 	{
 		if ($totalItems < 0) {
@@ -59,9 +77,7 @@ class Pagination
 	}
 
 	/**
-	 * Returns total number of items.
-	 *
-	 * @return int
+	 * getTotalItems() alias
 	 */
 	public function getItems()
 	{
@@ -128,6 +144,22 @@ class Pagination
 	public function getItemsPerPage()
 	{
 		return $this->itemsPerPage;
+	}
+
+	/**
+	 * setItemsPerPage() alias
+	 */
+	public function setLimit($itemsPerPage)
+	{
+		return $this->setItemsPerPage($itemsPerPage);
+	}
+
+	/**
+	 * getItemsPerPage() alias
+	 */
+	public function getLimit()
+	{
+		return $this->getItemsPerPage();
 	}
 
 	/**

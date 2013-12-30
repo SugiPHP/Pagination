@@ -15,7 +15,8 @@ Pagination class by it's own does not have any renders, instead it's primary goa
 use SugiPHP\Pagination\Pagination;
 
 $pagination = new Pagination();
-$pagination->setItems(45); // Set the total number of records (items)
+$pagination->setTotalItems(45); // Set the total number of items
+$pages = $pagination->toArray(); // described below
 
 ?>
 ```
@@ -25,7 +26,7 @@ If the web page's URL is http://example.com/index.php?page=3 Pagination will gue
 ```php
 <?php
 
-var_dump($pagination->toArray());
+var_dump($pages);
 
 // some parameters are removed for better readability
 [
@@ -77,6 +78,9 @@ $pagination->getPage();
  */
 $pagination->getItemsPerPage();
 
+// getItemsPerPage() alias
+$pagination->getLimit();
+
 /*
  * Returns URI pattern that is used to generate links and to guess current page.
  * Default is 'page={page}'
@@ -106,6 +110,12 @@ $pagination->getOffset();
  */
 $pagination->getProximity();
 
+// returns previously set total items
+$pagination->getTotalItems();
+
+// getTotalItems() alias
+$pagination->getItems();
+
 ?>
 ```
 
@@ -115,10 +125,16 @@ Setters
 <?php
 
 // Total number of items. This one MUST be set.
+$pagination->setTotalItems($totalItems);
+
+// setTotalItems() alias
 $pagination->setItems($totalItems);
 
 // Sets the number of items (lines) in a single page.
 $pagination->setItemsPerPage($itemsPerPage);
+
+// setItemsPerPage() alias
+$pagination->setLimit($itemsParPage);
 
 // Sets the page number manually.
 $pagination->setPage($page);
@@ -204,5 +220,5 @@ echo '<ul class="pagination">' . $items . '</ul>';
 
 TODO
 ----
- - Some basic renders
+ - Add some renders
 
