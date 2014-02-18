@@ -2,7 +2,7 @@ SugiPHP\Pagination
 ==================
 
 SugiPHP Pagination is a simple to use class that provides pagination links for your app. You can customize the look and feel of the
-pages links by writing a custom renderer or use one of the available ones like Twitter's Bootstrap (TODO) or extend them.
+pages links by writing a custom renderer or use one of the available ones like Twitter's Bootstrap or extend them.
 
 Basic usage
 -----------
@@ -218,7 +218,4 @@ echo '<ul class="pagination">' . $items . '</ul>';
 ?>
 ```
 
-TODO
-----
- - Add some renders
-
+You can see more renders examples in project's [examples](https://github.com/SugiPHP/Pagination/blob/master/examples/bootstrap3.php)
