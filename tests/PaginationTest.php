@@ -276,7 +276,7 @@ class PaginationTest extends PHPUnit_Framework_TestCase
 		// always should have "prev" and "next"
 		$this->assertArrayHasKey("prev", $pages);
 		$this->assertArrayHasKey("next", $pages);
-		// prev + first + 4 before + selected + 4 after + last + next
+		// previous | first | 4 before | selected | 4 after | last | next
 		$this->assertSame(13, count($pages));
 
 		// Test with proximity 3
@@ -295,9 +295,9 @@ class PaginationTest extends PHPUnit_Framework_TestCase
 		$this->assertSame(7, count($pages));
 
 		// Test with proximity 0
+		// previous | first | current | last | next
 		$pagination->setProximity(0);
 		$pages = $pagination->toArray();
-		// TODO: bugfix! this gives me 6 now
-		// $this->assertSame(5, count($pages));
+		$this->assertSame(5, count($pages));
 	}
 }

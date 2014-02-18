@@ -324,7 +324,7 @@ class Pagination
 				}
 			}
 			// do we need "..." button after first page
-			if ($from > 2) {
+			if ($from > 2 && $proximity) {
 				$result["less"] = array("page" => 0, "uri" => "#", "isCurrent" => false, "isDisabled" => true);
 				$from++;
 			}
@@ -338,7 +338,10 @@ class Pagination
 			for ($i = $from; $i <= $to; $i++) {
 				$result[$i] = array("page" => $i, "uri" => $this->createLink($i), "isCurrent" => ($i == $page), "isDisabled" => false);
 			}
-			if ($showMore) {
+			if (!$proximity) {
+				$result[$i] = array("page" => $page, "uri" => $this->createLink($page), "isCurrent" => true, "isDisabled" => false);
+			}
+			if ($showMore && $proximity) {
 				$result["more"] = array("page" => 0, "uri" => "#", "isCurrent" => false, "isDisabled" => true);
 			}
 		}
