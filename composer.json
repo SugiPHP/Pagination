@@ -2,7 +2,7 @@
     "name": "sugiphp/pagination",
     "type": "library",
     "description": "SugiPHP Pagination Component",
-    "keywords": ["pagination", "paginator", "sugiphp"],
+    "keywords": ["pagination", "paginator"],
     "license": "MIT",
     "authors": [
         {

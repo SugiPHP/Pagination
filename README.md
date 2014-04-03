@@ -1,5 +1,5 @@
-SugiPHP\Pagination
-==================
+Pagination
+==========
 
 SugiPHP Pagination is a simple to use class that provides pagination links for your app. You can customize the look and feel of the
 pages links by writing a custom renderer or use one of the available ones like Twitter's Bootstrap or extend them.

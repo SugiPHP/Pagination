@@ -24,13 +24,13 @@ class Pagination
 	 */
 	public function __construct($params = array())
 	{
-		if ($params and is_array($params)) {
+		if ($params && is_array($params)) {
 			foreach ($params as $key => $value) {
-				if ($key == "items" or $key == "totalItems") {
+				if ($key == "items" || $key == "totalItems") {
 					$this->setItems($value);
 				} elseif ($key == "page") {
 					$this->setPage($value);
-				} elseif ($key == "itemsPerPage" or $key == "ipp") {
+				} elseif ($key == "itemsPerPage" || $key == "ipp") {
 					$this->setItemsPerPage($value);
 				} elseif ($key == "uri") {
 					$this->setUri($value);

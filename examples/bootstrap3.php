@@ -15,7 +15,7 @@ function renderPagination(array $pages)
 		} elseif ($key === "next") {
 			$label = "&raquo;";
 			$rel = ' rel="next"';
-		} elseif ($key === "less" or $key === "more") {
+		} elseif ($key === "less" || $key === "more") {
 			$label = "...";
 		} else {
 			$label = $page["page"];
