@@ -320,6 +320,8 @@ class Pagination
 						$from--;
 					} elseif ($to < $last - 1) {
 						$to++;
+					} else {
+						break;
 					}
 				}
 			}
