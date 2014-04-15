@@ -14,10 +14,9 @@
         "php": ">=5.3"
     },
     "autoload": {
-        "psr-0": {
+        "psr-4": {
             "SugiPHP\\Pagination\\": ""
         }
     },
-    "target-dir": "SugiPHP/Pagination",
     "minimum-stability": "dev"
 }
