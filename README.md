@@ -1,15 +1,30 @@
 Pagination
 ==========
 
-[![Build Status](https://travis-ci.org/SugiPHP/Pagination.svg?branch=master)](https://travis-ci.org/SugiPHP/Pagination) [![SensioLabsInsight](https://insight.sensiolabs.com/projects/66b3b165-5039-4811-9c37-b6ade6fb9298/mini.png)](https://insight.sensiolabs.com/projects/66b3b165-5039-4811-9c37-b6ade6fb9298)
+[![Build Status](https://travis-ci.org/SugiPHP/Pagination.svg?branch=master)](https://travis-ci.org/SugiPHP/Pagination)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/66b3b165-5039-4811-9c37-b6ade6fb9298/mini.png)](https://insight.sensiolabs.com/projects/66b3b165-5039-4811-9c37-b6ade6fb9298)
 
-SugiPHP Pagination is a simple to use class that provides pagination links for your app. You can customize the look and feel of the
-pages links by writing a custom renderer or use one of the available ones like Twitter's Bootstrap or extend them.
+SugiPHP Pagination is a simple to use class that provides pagination links for your app. You can customize the
+look and feel of the pages links by writing a custom renderer or use one of the available ones like Twitter's
+Bootstrap or extend them.
+
+Install
+-------
+
+If you are using [composer](https://getcomposer.org/) type in the shell, otherwise you have to download Pagination and
+Exception classes
+
+
+```bash
+composer require sugiphp/pagination
+```
+
 
 Basic usage
 -----------
 
-Pagination class by it's own does not have any renders, instead it's primary goal is to give an array of items (links). This can be done easily:
+Pagination class by it's own does not have any renders, instead it's primary goal is to give an array of items (links).
+This can be done easily:
 
 ```php
 <?php
@@ -21,7 +36,8 @@ $pagination->setTotalItems(45); // Set the total number of items
 $pages = $pagination->toArray(); // described below
 ```
 
-If the web page's URL is http://example.com/index.php?page=3 Pagination will guess that the current page is 3 and will return something like this:
+If the web page's URL is http://example.com/index.php?page=3 Pagination will guess that the current page is 3
+and will return something like this:
 
 ```php
 <?php
@@ -30,32 +46,32 @@ var_dump($pages);
 
 // some parameters are removed for better readability
 [
-	'prev' => [
-		'page' => 2,
-		'uri' => '/index.php?page=1',
-		'isDisabled' => false
-	],
-	1 => [
-		'page' => 1,
-		'uri' => '/index.php?page=1',
-		'isCurrent' => false,
-	],
-	2 => [
-		'page' => 2,
-		'uri' => '/index.php?page=2',
-		'isCurrent' => false,
-	],
-	3 => [
-		'page' => 3,
-		'uri' => '/index.php?page=3',
-		'isCurrent' => true,
-		'isDisabled' => true,
-	],
-	'next' => [
-		'page' => 2,
-		'uri' => '#',
-		'isDisabled' => true
-	]
+    'prev' => [
+        'page' => 2,
+        'uri' => '/index.php?page=1',
+        'isDisabled' => false
+    ],
+    1 => [
+        'page' => 1,
+        'uri' => '/index.php?page=1',
+        'isCurrent' => false,
+    ],
+    2 => [
+        'page' => 2,
+        'uri' => '/index.php?page=2',
+        'isCurrent' => false,
+    ],
+    3 => [
+        'page' => 3,
+        'uri' => '/index.php?page=3',
+        'isCurrent' => true,
+        'isDisabled' => true,
+    ],
+    'next' => [
+        'page' => 2,
+        'uri' => '#',
+        'isDisabled' => true
+    ]
 ]
 ```
 
@@ -161,12 +177,12 @@ Each setting can be done in the Pagination constructor.
 <?php
 
 $config = array(
-	'items' => 100, // or 'totalItems'
-	'itemsPerPage' => 10, // or 'ipp'
-	'proximity' => 3,
-	'uri' => 'http://example.com/show/page:6',
-	'pattern' => 'page:{page}',
-	'page' => 6,
+    'items' => 100, // or 'totalItems'
+    'itemsPerPage' => 10, // or 'ipp'
+    'proximity' => 3,
+    'uri' => 'http://example.com/show/page:6',
+    'pattern' => 'page:{page}',
+    'page' => 6,
 );
 $pagination = new Pagination($config)
 ```
@@ -181,29 +197,29 @@ $pages = $pagination->toArray();
 // Twitter Bootstrap 3 pagination
 $items = "";
 foreach ($pages as $key => $page) {
-	// link
-	$href = $page["uri"];
+    // link
+    $href = $page["uri"];
 
-	// label
-	if ($key === "prev") {
-		$label = "&laquo;";
-	} elseif ($key === "next") {
-		$label = "&raquo;";
-	} elseif ($key === "less" or $key === "more") {
-		$label = "...";
-	} else {
-		$label = $page["page"];
-	}
+    // label
+    if ($key === "prev") {
+        $label = "&laquo;";
+    } elseif ($key === "next") {
+        $label = "&raquo;";
+    } elseif ($key === "less" or $key === "more") {
+        $label = "...";
+    } else {
+        $label = $page["page"];
+    }
 
-	// class
-	if ($page["isCurrent"]) {
-		$class = "active";
-	} elseif ($page["isDisabled"]) {
-		$class = "disabled";
-	} else {
-		$class = "";
-	}
-	$items .= '<li class="'.$class.'"><a href="'.$href.'">'.$label.'</a></li>';
+    // class
+    if ($page["isCurrent"]) {
+        $class = "active";
+    } elseif ($page["isDisabled"]) {
+        $class = "disabled";
+    } else {
+        $class = "";
+    }
+    $items .= '<li class="'.$class.'"><a href="'.$href.'">'.$label.'</a></li>';
 }
 
 echo '<ul class="pagination">' . $items . '</ul>';
