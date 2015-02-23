@@ -19,8 +19,6 @@ use SugiPHP\Pagination\Pagination;
 $pagination = new Pagination();
 $pagination->setTotalItems(45); // Set the total number of items
 $pages = $pagination->toArray(); // described below
-
-?>
 ```
 
 If the web page's URL is http://example.com/index.php?page=3 Pagination will guess that the current page is 3 and will return something like this:
@@ -59,7 +57,6 @@ var_dump($pages);
 		'isDisabled' => true
 	]
 ]
-?>
 ```
 
 Getters
@@ -117,8 +114,6 @@ $pagination->getTotalItems();
 
 // getTotalItems() alias
 $pagination->getItems();
-
-?>
 ```
 
 Setters
@@ -158,8 +153,6 @@ $pagination->setUri($uri);
 
 // Sets the proximity. See getProximity() above for more explanations.
 $pagination->setProximity($proximity);
-
-?>
 ```
 
 Each setting can be done in the Pagination constructor.
@@ -176,8 +169,6 @@ $config = array(
 	'page' => 6,
 );
 $pagination = new Pagination($config)
-
-?>
 ```
 
 Basic renderer
@@ -216,8 +207,6 @@ foreach ($pages as $key => $page) {
 }
 
 echo '<ul class="pagination">' . $items . '</ul>';
-
-?>
 ```
 
-You can see more renders examples in project's [examples](https://github.com/SugiPHP/Pagination/blob/master/examples/bootstrap3.php)
+You can see more renders examples in project's [examples](https://github.com/SugiPHP/Pagination/tree/master/examples/)

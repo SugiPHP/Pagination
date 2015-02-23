@@ -1,0 +1,16 @@
+<ul class="pagination">
+{% for key, page in pagination %}
+	{% if page.isCurrent %}
+	<li class="active"><a href="{{ page.uri }}">{{ page.page }}<span class="sr-only">(current)</span></a></li>
+	{% elseif page.isDisabled %}
+	<li class="disabled">
+		<span>{% if key == 'prev' %}&laquo;{% elseif key == 'next' %}&raquo;{% elseif key == 'less' %}...{% elseif key == 'more' %}...{% else %}{{ page.page }}{% endif %}</span>
+	</li>
+	{% else %}
+	<li>
+		<a href="{{ page.uri }}">{% if key == 'prev' %}&laquo;{% elseif key == 'next' %}&raquo;{% elseif key == 'less' %}...{% elseif key == 'more' %}...{% else %}{{ page.page }}{% endif %}
+		</a>
+	</li>
+	{% endif %}
+{% endfor %}
+</ul>
